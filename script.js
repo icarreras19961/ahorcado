@@ -15,8 +15,19 @@ let listaPalabras = [
   "lapiz",
   "agua",
   "estuche",
+  "supercalifragilisticoespiralidoso",
 ];
 let palabraSecreta;
+let letrasCifradas;
+//Pop up variables
+//Perder
+const envoltorio = document.getElementsByClassName("envoltorio-popup");
+const volverJugar = document.getElementsByClassName("volver-a-jugar");
+const cerrar = document.getElementsByClassName("cerrar-popup");
+//Ganar
+const envoltorioGanar = document.getElementsByClassName(
+  "envoltorio-popup-ganar"
+);
 
 //EVENTOS
 
@@ -26,10 +37,19 @@ analfabeto.addEventListener("click", (e) => {
   comprobador(e);
 });
 
+//eventos del popup
+cerrar[0].addEventListener("click", () => {
+  envoltorio[0].style.display = "none";
+});
+volverJugar[0].addEventListener("click", () => {
+  envoltorio[0].style.display = "none";
+  location.reload();
+});
+
 //FUNCIONES
 //Elije la palabra secreta que se va a utilizar
 function PalabraSecreta() {
-  let indexPalabraSecreta = Math.floor(Math.random() * 10);
+  let indexPalabraSecreta = Math.floor(Math.random() * listaPalabras.length);
   //   console.log(indesPalabraSecreta);
   palabraSecreta = listaPalabras[indexPalabraSecreta];
   console.log(palabraSecreta);
@@ -38,76 +58,113 @@ function PalabraSecreta() {
 
 //Cifrador de la palabra
 function cifrador(palabraSecreta) {
-  console.log(palabraSecreta.length);
+  letrasCifradas = [palabraSecreta.length];
   for (let i = 0; i < palabraSecreta.length; i++) {
-    console.log(i);
-    divSecreto.innerText += " -";
+    letrasCifradas[i] = false;
   }
 }
-
 //Comprobador
 function comprobador(e) {
-  let fallo = false;
+  let esIgual = true;
+  let letrasGuardadas;
   let letra = e.target.innerText;
+
   //Recorre palabra
+  letrasGuardadas = letrasCifradas.slice();
   for (let i = 0; i < palabraSecreta.length; i++) {
     fallo = false;
     console.log(fallo);
     //Alaniza si esta la letra o no
     if (letra.toLowerCase() == palabraSecreta.charAt(i)) {
-      divSecreto.innerText += letra;
+      letrasCifradas[i] = true;
       e.target.classList.add("acierto");
-      console.log(fallo);
-      break;
-    } else {
-      fallo = true;
-      console.log(fallo);
     }
   }
-  //Lo que pasa si fallo
-  if (fallo) {
-    intento.innerText--;
 
+  //Saber si he fallado o no para restar
+  for (let i = 0; i < palabraSecreta.length; i++) {
+    if (letrasCifradas[i] == letrasGuardadas[i]) {
+      esIgual = true;
+    } else {
+      esIgual = false;
+      break;
+    }
+  }
+
+  //Lo que pasa si fallo
+  console.log("letras guardadas: " + letrasGuardadas);
+  console.log("letras cifradas: " + letrasCifradas);
+  console.log("son iguales: " + (letrasGuardadas === letrasCifradas));
+  if (esIgual) {
+    intento.innerText--;
     e.target.classList.add("error");
     console.log(intento.innerText);
     if (intento.innerText <= 0) {
       console.log("has perdido");
+      envoltorio[0].style.display = "block";
+    }
+  }
+  escribidor();
+  // console.log(divSecreto.innerHTML);
+  if (divSecreto.innerHTML == palabraSecreta) {
+    console.log("Has ganado");
+    envoltorioGanar[0].style.display = "block";
+  }
+}
+
+function escribidor() {
+  console.log(letrasCifradas);
+  divSecreto.innerText = "";
+  for (let i = 0; i < palabraSecreta.length; i++) {
+    if (letrasCifradas[i]) {
+      divSecreto.innerText += palabraSecreta[i];
+    } else {
+      divSecreto.innerText += "-";
     }
   }
 }
+
 function cronometor() {
-  //Cronometro que me he copiado del otro ejercicio
-  let elCrono;
-  let miFecha = new Date();
+  //VARIABLES DEL CRONOMETRO
+  let start = document.getElementById("start");
+  let stop = document.getElementById("stop");
+  let reset = document.getElementById("reset");
   let lahora = document.getElementById("lahora");
+  let miFecha = new Date();
+  miFecha.setHours(0, 0, 0, 0);
+  let elCrono;
+  lahora.innerHTML = "00" + ":" + "00" + ":" + "00";
 
-  //Para marcar donde empieza
-  miFecha.setHours(0, 0, 10, 0);
+  //EVENTOS DEL CRONOMETRO
+  start.addEventListener("click", (e) => {
+    elCrono = setInterval(crono, 1000);
+  });
+  stop.addEventListener("click", (e) => {
+    parar();
+  });
+  reset.addEventListener("click", (e) => {
+    reset();
+  });
 
-  //Inicializo el tiempo para el cronometor
-  lahora.innerHTML = "00:00:10";
-
+  //FUNCIONES DEL CRONOMETRO
   function crono() {
-    //Las variables equivalentes a las horas,minutos y segundos
     let horas = miFecha.getHours();
     let minutos = miFecha.getMinutes();
     let segundos = miFecha.getSeconds();
 
-    //lo que hace que el cronometro funcione
-    //si pones -= va atras y si pones += va palante
-    segundos -= 1;
+    segundos += 1;
 
-    //parafernalia del cronometro para alate
     if (segundos == 60) {
       segundos = 0;
       minutos += 1;
       miFecha.setMinutes(minutos);
     }
+
     miFecha.setSeconds(segundos);
+
     if (horas < 10) {
       horas = "0" + horas;
     }
-
     if (minutos < 10) {
       minutos = "0" + minutos;
     }
@@ -115,26 +172,22 @@ function cronometor() {
       segundos = "0" + segundos;
     }
     lahora.innerHTML = horas + ":" + minutos + ":" + segundos;
+  }
 
-    //Cuando el contador llegue ha cero este cronometro se para
-    if (segundos == 0) {
-      parar();
-    }
-  }
-  function start() {
-    elCrono = setInterval(crono, 1000);
-  }
   function parar() {
     clearInterval(elCrono);
   }
-  function reiniciarCrono() {
-    miFecha.setHours(0, 0, 10, 0);
 
-    lahora.innerHTML = "00:00:10";
-  }
+  //Con esto puesto no va sin el si
+  // function reiniciarCrono() {
+  //   miFecha.setHours(0, 0, 0, 0);
+  //   lahora.innerHTML = "00:00:00";
+  // }
 
-  function reset() {
-    setTimeout(reiniciarCrono);
-  }
+  // function reset() {
+  //   setTimeout(reiniciarCrono);
+  // }
 }
+cronometor();
 PalabraSecreta();
+escribidor();
