@@ -2,7 +2,8 @@
 let analfabeto = document.getElementById("analfabeto");
 let divSecreto = document.querySelector(".palabra-secreta");
 let intento = document.querySelector(".intentos");
-// console.log(intento.innerText)
+let imagen = document.getElementById("imagen");
+console.log(imagen);
 let listaPalabras = [
   "hola",
   "adios",
@@ -24,9 +25,14 @@ let letrasCifradas;
 const envoltorio = document.getElementsByClassName("envoltorio-popup");
 const volverJugar = document.getElementsByClassName("volver-a-jugar");
 const cerrar = document.getElementsByClassName("cerrar-popup");
+let popUpPalabraSecreta = document.getElementById("pop-up-palabraSecreta");
 //Ganar
 const envoltorioGanar = document.getElementsByClassName(
   "envoltorio-popup-ganar"
+);
+const cerrarGanar = document.getElementsByClassName("cerrar-popup-ganar");
+const volverJugarGanar = document.getElementsByClassName(
+  "volver-a-jugar-ganar"
 );
 
 //EVENTOS
@@ -46,6 +52,14 @@ volverJugar[0].addEventListener("click", () => {
   location.reload();
 });
 
+//Eventos ganar
+volverJugarGanar[0].addEventListener("click", () => {
+  envoltorioGanar[0].style.display = "none";
+  location.reload();
+});
+cerrarGanar[0].addEventListener("click", () => {
+  envoltorioGanar[0].style.display = "none";
+});
 //FUNCIONES
 //Elije la palabra secreta que se va a utilizar
 function PalabraSecreta() {
@@ -97,10 +111,15 @@ function comprobador(e) {
   console.log("son iguales: " + (letrasGuardadas === letrasCifradas));
   if (esIgual) {
     intento.innerText--;
+
+    // console.log(`img/intento${intento.innerText}.png`);
+    imagen.src = `img/fallo${intento.innerText}.png`;
     e.target.classList.add("error");
     console.log(intento.innerText);
     if (intento.innerText <= 0) {
+      imagen.src = `img/hasPerdido.png.png`;
       console.log("has perdido");
+      popUpPalabraSecreta.innerHTML = palabraSecreta;
       envoltorio[0].style.display = "block";
     }
   }
@@ -108,6 +127,8 @@ function comprobador(e) {
   // console.log(divSecreto.innerHTML);
   if (divSecreto.innerHTML == palabraSecreta) {
     console.log("Has ganado");
+    // console.log(envoltorio[0]);
+    // console.log(envoltorioGanar[0]);
     envoltorioGanar[0].style.display = "block";
   }
 }
@@ -128,7 +149,7 @@ function cronometor() {
   //VARIABLES DEL CRONOMETRO
   let start = document.getElementById("start");
   let stop = document.getElementById("stop");
-  let reset = document.getElementById("reset");
+  let botonReset = document.getElementById("reset");
   let lahora = document.getElementById("lahora");
   let miFecha = new Date();
   miFecha.setHours(0, 0, 0, 0);
@@ -142,7 +163,7 @@ function cronometor() {
   stop.addEventListener("click", (e) => {
     parar();
   });
-  reset.addEventListener("click", (e) => {
+  botonReset.addEventListener("click", (e) => {
     reset();
   });
 
@@ -172,6 +193,8 @@ function cronometor() {
       segundos = "0" + segundos;
     }
     lahora.innerHTML = horas + ":" + minutos + ":" + segundos;
+    if (condition) {
+    }
   }
 
   function parar() {
@@ -179,14 +202,14 @@ function cronometor() {
   }
 
   //Con esto puesto no va sin el si
-  // function reiniciarCrono() {
-  //   miFecha.setHours(0, 0, 0, 0);
-  //   lahora.innerHTML = "00:00:00";
-  // }
+  function reiniciarCrono() {
+    miFecha.setHours(0, 0, 0, 0);
+    lahora.innerHTML = "00:00:00";
+  }
 
-  // function reset() {
-  //   setTimeout(reiniciarCrono);
-  // }
+  function reset() {
+    setTimeout(reiniciarCrono);
+  }
 }
 cronometor();
 PalabraSecreta();

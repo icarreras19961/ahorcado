@@ -16,7 +16,16 @@ body {
 h1 {
   margin: 20px;
 }
+img{
+  width: 25%;
+  height: auto;
+  margin: 5px;
+  border-radius: 15px;
+  position: absolute;
+  left: 10%;
+  box-shadow: 1px 2px 5px 2px rgba(8, 19, 36, 0.2);
 
+}
 .contenedor-intentos {
   display: flex;
   align-items: center;
@@ -141,10 +150,22 @@ hr {
   color: white;
   text-decoration: none;
   margin: 5px;
+  display: block;
   padding: 6px 10px;
+  border-radius: 5px;
 }
+#imagen-popup{
+  box-shadow: 1px 2px 5px 2px rgba(8, 19, 36, 0.2);
 
+  left: 5px;
+}
 .cerrar-popup {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  cursor: pointer;
+}
+.cerrar-popup-ganar {
   position: absolute;
   top: 5px;
   right: 8px;
