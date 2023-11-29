@@ -20,6 +20,11 @@ let listaPalabras = [
 ];
 let palabraSecreta;
 let letrasCifradas;
+let cont = 0;
+let record = {
+  IntentosRestantes: "",
+  tiempoEmpleado: "",
+};
 //Pop up variables
 //Perder
 const envoltorio = document.getElementsByClassName("envoltorio-popup");
@@ -39,8 +44,16 @@ const volverJugarGanar = document.getElementsByClassName(
 
 // Cuando elijes una letra
 analfabeto.addEventListener("click", (e) => {
-  console.log(e.target.innerText);
-  comprobador(e);
+  if (e.target.classList.contains("letra")) {
+    cont++;
+    console.log(cont);
+    if (cont == 1) {
+      elCrono = setInterval(crono, 1000);
+      start.style.display = "none";
+    }
+    console.log(e.target.innerText);
+    comprobador(e);
+  }
 });
 
 //eventos del popup
@@ -109,9 +122,12 @@ function comprobador(e) {
   console.log("letras guardadas: " + letrasGuardadas);
   console.log("letras cifradas: " + letrasCifradas);
   console.log("son iguales: " + (letrasGuardadas === letrasCifradas));
+  record.IntentosRestantes = intento.innerText;
+  record.tiempoEmpleado = lahora.innerText;
+
+  console.log(record);
   if (esIgual) {
     intento.innerText--;
-
     // console.log(`img/intento${intento.innerText}.png`);
     imagen.src = `img/fallo${intento.innerText}.png`;
     e.target.classList.add("error");
@@ -121,6 +137,8 @@ function comprobador(e) {
       console.log("has perdido");
       popUpPalabraSecreta.innerHTML = palabraSecreta;
       envoltorio[0].style.display = "block";
+      parar();
+      recordLocalStorage(record);
     }
   }
   escribidor();
@@ -130,9 +148,13 @@ function comprobador(e) {
     // console.log(envoltorio[0]);
     // console.log(envoltorioGanar[0]);
     envoltorioGanar[0].style.display = "block";
+    parar();
+    recordLocalStorage(record);
   }
 }
-
+function recordLocalStorage(record) {
+  localStorage.setItem(palabraSecreta, JSON.stringify(record));
+}
 function escribidor() {
   console.log(letrasCifradas);
   divSecreto.innerText = "";
@@ -145,72 +167,90 @@ function escribidor() {
   }
 }
 
-function cronometor() {
-  //VARIABLES DEL CRONOMETRO
-  let start = document.getElementById("start");
-  let stop = document.getElementById("stop");
-  let botonReset = document.getElementById("reset");
-  let lahora = document.getElementById("lahora");
-  let miFecha = new Date();
-  miFecha.setHours(0, 0, 0, 0);
-  let elCrono;
-  lahora.innerHTML = "00" + ":" + "00" + ":" + "00";
+// function cronometor() {
+//VARIABLES DEL CRONOMETRO
+let start = document.getElementById("start");
 
-  //EVENTOS DEL CRONOMETRO
-  start.addEventListener("click", (e) => {
+let stop = document.getElementById("stop");
+
+let botonReset = document.getElementById("reset");
+let lahora = document.getElementById("lahora");
+let miFecha = new Date();
+miFecha.setHours(0, 0, 0, 0);
+let elCrono;
+lahora.innerHTML = "00" + ":" + "00" + ":" + "00";
+
+//EVENTOS DEL CRONOMETRO
+start.addEventListener("click", (e) => {
+  let cont = 0;
+  cont++;
+  if (cont == 1) {
     elCrono = setInterval(crono, 1000);
-  });
-  stop.addEventListener("click", (e) => {
-    parar();
-  });
-  botonReset.addEventListener("click", (e) => {
-    reset();
-  });
+    start.style.display = "none";
+    stop.style.display = "inline-block";
+  }
+});
+stop.addEventListener("click", (e) => {
+  parar();
+});
+botonReset.addEventListener("click", (e) => {
+  reset();
+  start.style.display = "inline-block";
+});
 
-  //FUNCIONES DEL CRONOMETRO
-  function crono() {
-    let horas = miFecha.getHours();
-    let minutos = miFecha.getMinutes();
-    let segundos = miFecha.getSeconds();
+//FUNCIONES DEL CRONOMETRO
+function crono() {
+  let horas = miFecha.getHours();
+  let minutos = miFecha.getMinutes();
+  let segundos = miFecha.getSeconds();
 
-    segundos += 1;
+  segundos += 1;
 
-    if (segundos == 60) {
-      segundos = 0;
-      minutos += 1;
-      miFecha.setMinutes(minutos);
-    }
-
-    miFecha.setSeconds(segundos);
-
-    if (horas < 10) {
-      horas = "0" + horas;
-    }
-    if (minutos < 10) {
-      minutos = "0" + minutos;
-    }
-    if (segundos < 10) {
-      segundos = "0" + segundos;
-    }
-    lahora.innerHTML = horas + ":" + minutos + ":" + segundos;
-    if (condition) {
-    }
+  if (segundos == 60) {
+    segundos = 0;
+    minutos += 1;
+    miFecha.setMinutes(minutos);
   }
 
-  function parar() {
-    clearInterval(elCrono);
-  }
+  miFecha.setSeconds(segundos);
 
-  //Con esto puesto no va sin el si
-  function reiniciarCrono() {
-    miFecha.setHours(0, 0, 0, 0);
-    lahora.innerHTML = "00:00:00";
+  if (horas < 10) {
+    horas = "0" + horas;
   }
-
-  function reset() {
-    setTimeout(reiniciarCrono);
+  if (minutos < 10) {
+    minutos = "0" + minutos;
+  }
+  if (segundos < 10) {
+    segundos = "0" + segundos;
+  }
+  lahora.innerHTML = horas + ":" + minutos + ":" + segundos;
+  if (segundos % 5 == 0) {
+    intento.innerText--;
+    if (intento.innerText <= 0) {
+      imagen.src = `img/hasPerdido.png.png`;
+      console.log("has perdido");
+      popUpPalabraSecreta.innerHTML = palabraSecreta;
+      envoltorio[0].style.display = "block";
+      parar();
+    }
   }
 }
-cronometor();
+
+function parar() {
+  clearInterval(elCrono);
+}
+
+//Con esto puesto no va sin el si
+function reiniciarCrono() {
+  miFecha.setHours(0, 0, 0, 0);
+  lahora.innerHTML = "00:00:00";
+}
+
+function reset() {
+  location.reload();
+  setTimeout(reiniciarCrono);
+}
+// }
+// cronometor();
 PalabraSecreta();
 escribidor();
