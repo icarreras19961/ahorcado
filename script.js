@@ -5,7 +5,7 @@ let intento = document.querySelector(".intentos");
 let imagen = document.getElementById("imagen");
 console.log(imagen);
 let listaPalabras = [
-  "hola",
+  "Hola",
   "adios",
   "patata",
   "zapato",
@@ -25,6 +25,7 @@ let record = {
   IntentosRestantes: "",
   tiempoEmpleado: "",
 };
+let pRecord = document.getElementById("pRecord");
 //Pop up variables
 //Perder
 const envoltorio = document.getElementsByClassName("envoltorio-popup");
@@ -39,6 +40,12 @@ const cerrarGanar = document.getElementsByClassName("cerrar-popup-ganar");
 const volverJugarGanar = document.getElementsByClassName(
   "volver-a-jugar-ganar"
 );
+
+const eligeTema = document.getElementById("eligeTema");
+const envoltorioElegirTema = document.getElementsByClassName(
+  "envoltorio-popup-eligeTema"
+);
+const cerrarEligeTema = document.getElementsByClassName("cerrar-popup-ganar");
 
 //EVENTOS
 
@@ -73,6 +80,15 @@ volverJugarGanar[0].addEventListener("click", () => {
 cerrarGanar[0].addEventListener("click", () => {
   envoltorioGanar[0].style.display = "none";
 });
+
+//Evento elegir tema
+eligeTema.addEventListener("click", (e) => {
+  envoltorioElegirTema[0].style.display = "block";
+});
+cerrarEligeTema[0].addEventListener("click", () => {
+  envoltorioGanar[0].style.display = "none";
+});
+
 //FUNCIONES
 //Elije la palabra secreta que se va a utilizar
 function PalabraSecreta() {
@@ -102,7 +118,7 @@ function comprobador(e) {
     fallo = false;
     console.log(fallo);
     //Alaniza si esta la letra o no
-    if (letra.toLowerCase() == palabraSecreta.charAt(i)) {
+    if (letra.toLowerCase() == palabraSecreta.charAt(i).toLowerCase()) {
       letrasCifradas[i] = true;
       e.target.classList.add("acierto");
     }
@@ -152,8 +168,33 @@ function comprobador(e) {
     recordLocalStorage(record);
   }
 }
-function recordLocalStorage(record) {
-  localStorage.setItem(palabraSecreta, JSON.stringify(record));
+//Lo que se introduce en el localstorage
+function recordLocalStorage(puntuacionActual) {
+  // Las variables json
+  let recordAnterior = JSON.parse(localStorage.getItem(palabraSecreta));
+  let nuevoRecord = recordAnterior;
+  console.log(recordAnterior);
+  // Las condiciones para modificar los records
+  if (recordAnterior != null) {
+    if (recordAnterior.IntentosRestantes < puntuacionActual.IntentosRestantes) {
+      nuevoRecord.IntentosRestantes = puntuacionActual.IntentosRestantes;
+    }
+    if (recordAnterior.tiempoEmpleado > puntuacionActual.tiempoEmpleado) {
+      nuevoRecord.tiempoEmpleado = puntuacionActual.tiempoEmpleado;
+    }
+  } else {
+    nuevoRecord = puntuacionActual;
+  }
+  console.log(nuevoRecord);
+  let record =
+    "El record es: <br/>Intentos:" +
+    nuevoRecord.IntentosRestantes +
+    " <br/>" +
+    "tiempo usado: " +
+    nuevoRecord.tiempoEmpleado;
+  localStorage.setItem(palabraSecreta, JSON.stringify(nuevoRecord));
+  console.log(record);
+  pRecord.innerHTML = record;
 }
 function escribidor() {
   console.log(letrasCifradas);

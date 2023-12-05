@@ -16,7 +16,16 @@ body {
 h1 {
   margin: 20px;
 }
-img{
+
+button {
+  background-color: #4c71b9;
+  border-radius: 5px;
+  color: white;
+  border-color: #3d5b96;
+  padding: 5px;
+}
+
+img {
   width: 25%;
   height: auto;
   margin: 5px;
@@ -24,7 +33,6 @@ img{
   position: absolute;
   left: 10%;
   box-shadow: 1px 2px 5px 2px rgba(8, 19, 36, 0.2);
-
 }
 .contenedor-intentos {
   display: flex;
@@ -124,15 +132,6 @@ hr {
   height: 100%;
   display: none;
 }
-.envoltorio-popup-ganar {
-  background: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: none;
-}
 .popup {
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
@@ -154,7 +153,7 @@ hr {
   padding: 6px 10px;
   border-radius: 5px;
 }
-#imagen-popup{
+#imagen-popup {
   box-shadow: 1px 2px 5px 2px rgba(8, 19, 36, 0.2);
 
   left: 5px;
@@ -165,7 +164,33 @@ hr {
   right: 8px;
   cursor: pointer;
 }
+/**popUp ganar*/
+.envoltorio-popup-ganar {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
 .cerrar-popup-ganar {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  cursor: pointer;
+}
+/** popUp Elegir tema*/
+.envoltorio-popup-eligeTema {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+.cerrar-popup-eligeTema {
   position: absolute;
   top: 5px;
   right: 8px;

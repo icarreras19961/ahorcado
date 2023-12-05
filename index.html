@@ -10,7 +10,26 @@
 
 <body>
   <h1>Juego del ahorcado</h1>
-
+  <button id="eligeTema">Elegir tematica</button>
+  <div class="envoltorio-popup-eligeTema">
+    <div class="popup">
+      <div class="cerrar-popup-eligeTema">x</div>
+      <div class="contenido-popup">
+        <h2>Elige un tema</h2>
+        <hr>
+        <button>Comida</button>
+        <hr>
+        <button>Paises</button>
+        <hr>
+        <button>Animales</button>
+        <hr>
+        <button>Flora</button>
+        <hr>
+        <button>Tabla Periodica</button>
+      </div>
+    </div>
+  </div>
+  <br>
   <img id="imagen" src="img/fallo0.png" alt="" srcset="">
   <div class="contenedor-intentos">
     <p>
@@ -70,6 +89,8 @@
         <h3>La palabra era:</h3>
         <p id="pop-up-palabraSecreta"></p>
         <hr>
+        <p id="record"></p>
+        <hr>
         <p>¿Quieres volver a Jugar?</p>
         <a class="volver-a-jugar" href="#">Volver a Jugar</a>
       </div>
@@ -82,12 +103,13 @@
       <div class="contenido-popup">
         <h2>Has Ganado :D</h2>
         <hr>
+        <p id="pRecord"></p>
+        <hr>
         <p>¿Quieres volver a Jugar?</p>
         <a class="volver-a-jugar-ganar" href="#">Volver a Jugar</a>
       </div>
     </div>
   </div>
-
   <script src="script.js"></script>
 </body>
 
