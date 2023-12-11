@@ -4,6 +4,7 @@ let divSecreto = document.querySelector(".palabra-secreta");
 let intento = document.querySelector(".intentos");
 let imagen = document.getElementById("imagen");
 console.log(imagen);
+let ListaJSON;
 let listaPalabras = [
   "Hola",
   "adios",
@@ -46,6 +47,11 @@ const envoltorioElegirTema = document.getElementsByClassName(
   "envoltorio-popup-eligeTema"
 );
 const cerrarEligeTema = document.getElementsByClassName("cerrar-popup-ganar");
+let comida = document.getElementById("comida");
+let paises = document.getElementById("paises");
+let animales = document.getElementById("animales");
+let flora = document.getElementById("flora");
+let TPeriodica = document.getElementById("TPeriodica");
 
 //EVENTOS
 
@@ -84,9 +90,39 @@ cerrarGanar[0].addEventListener("click", () => {
 //Evento elegir tema
 eligeTema.addEventListener("click", (e) => {
   envoltorioElegirTema[0].style.display = "block";
+  comida.addEventListener("click", (e) => {
+    listaPalabras = ListaJSON[0];
+    envoltorioElegirTema[0].style.display = "none";
+    PalabraSecreta();
+    escribidor();
+  });
+  paises.addEventListener("click", (e) => {
+    listaPalabras = ListaJSON[1];
+    envoltorioElegirTema[0].style.display = "none";
+    PalabraSecreta();
+    escribidor();
+  });
+  animales.addEventListener("click", (e) => {
+    listaPalabras = ListaJSON[2];
+    envoltorioElegirTema[0].style.display = "none";
+    PalabraSecreta();
+    escribidor();
+  });
+  flora.addEventListener("click", (e) => {
+    listaPalabras = ListaJSON[3];
+    envoltorioElegirTema[0].style.display = "none";
+    PalabraSecreta();
+    escribidor();
+  });
+  TPeriodica.addEventListener("click", (e) => {
+    listaPalabras = ListaJSON[4];
+    envoltorioElegirTema[0].style.display = "none";
+    PalabraSecreta();
+    escribidor();
+  });
 });
 cerrarEligeTema[0].addEventListener("click", () => {
-  envoltorioGanar[0].style.display = "none";
+  envoltorioElegirTema[0].style.display = "none";
 });
 
 //FUNCIONES
@@ -265,7 +301,7 @@ function crono() {
     segundos = "0" + segundos;
   }
   lahora.innerHTML = horas + ":" + minutos + ":" + segundos;
-  if (segundos % 5 == 0) {
+  if (segundos % 10 == 0) {
     intento.innerText--;
     if (intento.innerText <= 0) {
       imagen.src = `img/hasPerdido.png.png`;
@@ -293,5 +329,42 @@ function reset() {
 }
 // }
 // cronometor();
+
+//JOSN
+const obtenerTodos = (callback, source) => {
+  const request = new XMLHttpRequest();
+
+  request.addEventListener("readystatechange", () => {
+    if (request.readyState === 4 && request.status === 200) {
+      const respuesta = JSON.parse(request.responseText);
+      callback(undefined, respuesta);
+    } else if (request.readyState === 4) {
+      // console.lg("no se han podido obtener los datos");
+      callback("no se han podido obtener los datos", undefined);
+    }
+  });
+  //open
+  //p1: tipo de solicitud
+  //p2: a quien le hacemos la solicitud (a que endpoint)
+
+  request.open("GET", source);
+
+  //send
+  request.send();
+};
+obtenerTodos((error, datos) => {
+  getionaRespuesta(error, datos);
+}, "tema.json");
+
+function getionaRespuesta(error, datos) {
+  console.log("callback disparado");
+  // console.log(error, datos);
+  if (error) {
+    console.log("error");
+  } else {
+    ListaJSON = datos;
+    console.log(ListaJSON);
+  }
+}
 PalabraSecreta();
 escribidor();
