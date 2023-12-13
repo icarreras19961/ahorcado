@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../style.css">
+
+  <title>Cine</title>
+</head>
+
+<body>
+  <div class="contenidor-pelicula">
+    <label>trïi una pelicula</label>
+    <select id="pelicula">
+      <option value="10">shrek(10€)</option>
+      <option value="12">Como entrenar a tu dragon(12€)</option>
+      <option value="14">Transformers(14€)</option>
+      <option value="20">Pacific Rim(20€)</option>
+    </select>
+  </div>
+  <ul class="llegenda">
+    <li>
+      <div class="seient"></div>
+      <small>
+        N/A
+      </small>
+
+    </li>
+    <li>
+      <div class="seient seleccionat"> </div>
+      <small>
+        seleccionat
+      </small>
+
+    </li>
+    <li>
+      <div class="seient ocupat"></div>
+      <small>
+        ocupat
+      </small>
+
+    </li>
+  </ul>
+  <div class="contenidor">
+    <div class="pantalla">
+      <h1>Juego del ahorcado</h1>
+      <button id="eligeTema">Elegir tematica</button>
+      <div class="envoltorio-popup-eligeTema">
+        <div class="popup">
+          <div class="cerrar-popup-eligeTema">x</div>
+          <div class="contenido-popup">
+            <h2>Elige un tema</h2>
+            <hr>
+            <button id="comida">Comida</button>
+            <hr>
+            <button id="paises">Paises</button>
+            <hr>
+            <button id="animales">Animales</button>
+            <hr>
+            <button id="flora">Flora</button>
+            <hr>
+            <button id="TPeriodica">Tabla Periodica</button>
+          </div>
+        </div>
+      </div>
+      <br>
+      <img id="imagen" src="img/fallo0.png" alt="" srcset="">
+      <div id="contenido-general">
+        <div class="contenedor-intentos">
+          <p>
+            Elije una letra, te quedan
+            <span class="intentos">7</span>
+          </p>
+        </div>
+        <div class="palabra-secreta"></div>
+
+        <div id="analfabeto">
+          <div class="letra">A</div>
+          <div class="letra">B</div>
+          <div class="letra">C</div>
+          <div class="letra">D</div>
+          <div class="letra">E</div>
+          <div class="letra">F</div>
+          <div class="letra">G</div>
+          <div class="letra">H</div>
+          <div class="letra">I</div>
+          <div class="letra">J</div>
+          <div class="letra">K</div>
+          <div class="letra">L</div>
+          <div class="letra">M</div>
+          <div class="letra">N</div>
+          <div class="letra">Ñ</div>
+          <div class="letra">O</div>
+          <div class="letra">P</div>
+          <div class="letra">Q</div>
+          <div class="letra">R</div>
+          <div class="letra">S</div>
+          <div class="letra">T</div>
+          <div class="letra">U</div>
+          <div class="letra">V</div>
+          <div class="letra">W</div>
+          <div class="letra">X</div>
+          <div class="letra">Y</div>
+          <div class="letra">Z</div>
+        </div>
+      </div>
+      <div class="cronometro">
+
+        <div id="lahora">00:00:00</div>
+        <hr>
+        <button class="boton" id="start">Start</button>
+        <button class="boton" id="stop">Stop</button>
+        <button class="boton" id="reset">Reset</button>
+      </div>
+      <div class="envoltorio-popup">
+        <div class="popup">
+          <div class="cerrar-popup">x</div>
+          <div class="contenido-popup">
+            <h2>Has Perdido :C</h2>
+            <img id="imagen-popup" src="img/hasPerdido.png" alt="" srcset="">
+            <hr>
+            <h3>La palabra era:</h3>
+            <p id="pop-up-palabraSecreta"></p>
+            <hr>
+            <p id="record"></p>
+            <hr>
+            <p>¿Quieres volver a Jugar?</p>
+            <a class="volver-a-jugar" href="#">Volver a Jugar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="envoltorio-popup-ganar">
+        <div class="popup">
+          <div class="cerrar-popup-ganar">x</div>
+          <div class="contenido-popup">
+            <h2>Has Ganado :D</h2>
+            <hr>
+            <p id="pRecord"></p>
+            <hr>
+            <p>¿Quieres volver a Jugar?</p>
+            <a class="volver-a-jugar-ganar" href="#">Volver a Jugar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="puto-francisco">
+
+      <div id="grupo-asientos">
+        <div class="fila">
+          <div class="seient"></div>
+          <div class="seient ocupat"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+        </div>
+        <div class="fila">
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient ocupat"></div>
+          <div class="seient"></div>
+        </div>
+        <div class="fila">
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+        </div>
+        <div class="fila">
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient ocupat"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+        </div>
+        <div class="fila">
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient ocupat"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+        </div>
+        <div class="fila">
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient ocupat"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+          <div class="seient"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p class="text">Ha seleccionat <span id="contador">0</span> seients per un preu de <span id="total">0</span> €</p>
+  <script src="script.js"></script>
+  <script src="../script.js"></script>
+
+</body>
+
+</html>
